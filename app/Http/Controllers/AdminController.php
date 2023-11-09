@@ -177,4 +177,15 @@ class AdminController extends Controller
 
         return view('admin.search_results', compact('users', 'query'));
     }
+
+    public function searchInventory(Request $request)
+    {
+        $searchTerm = $request->input('search');
+
+        $inventory = Inventory::whereHas('product', function ($query) use ($searchTerm) {
+            $query->where('name', 'like', "%$searchTerm%");
+        })->get();
+
+        return view('admin.search_results_Inventory', compact('inventory'));
+    }
 }

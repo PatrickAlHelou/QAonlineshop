@@ -68,3 +68,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 //Filter User
 Route::get('admin/user/search', [App\Http\Controllers\AdminController::class ,'searchUsers'])->name('admin.user.search');
 Route::delete('/manage/delete/user/{id}', [App\Http\Controllers\AdminController::class ,'destroy'])->name('admin.user.delete');
+
+//Filter Inventory
+Route::get('admin/product/search', [App\Http\Controllers\AdminController::class ,'searchInventory'])->name('admin.product.searchInventory');

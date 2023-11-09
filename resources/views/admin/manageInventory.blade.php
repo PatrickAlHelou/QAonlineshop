@@ -8,6 +8,20 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Categories</h4>
+
+
+                            <form method="GET" action="{{ route('admin.product.searchInventory') }}">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="search" placeholder="Search by name, category, or subcategory">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary btn-sm" type="submit">Search</button>
+                                    </div>
+                                </div>
+
+                            </form>
+
+                            <div style="margin-top: 20px;"></div>
+
                             <form method="GET" action="{{route('admin.product.create')}}">
                                 <button style="float: right" type="submit" class="btn btn-success">+ Add Product</button>
                             </form>
