@@ -86,10 +86,9 @@
                                 </div>
                             </div>
                             <div class="preview-item-content">
-                                <h6 class="preview-subject font-weight-normal">New user registration</h6>
-                                <p class="font-weight-light small-text mb-0 text-muted">
-                                    2 days ago
-                                </p>
+                                <button class="btn btn-link preview-subject font-weight-normal" onclick="window.location.href='{{ route('notification') }}'">
+                                    Notifications
+                                </button>
                             </div>
                         </a>
                     </div>

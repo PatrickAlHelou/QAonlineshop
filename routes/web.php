@@ -85,3 +85,6 @@ Route::delete('/manage/delete/user/{id}', [App\Http\Controllers\AdminController:
 
 //Filter Inventory
 Route::get('admin/product/search', [App\Http\Controllers\AdminController::class ,'searchInventory'])->name('admin.product.searchInventory');
+
+//Notification
+Route::get('/notification', [App\Http\Controllers\NotificationController::class, 'index'])->name('notification');
