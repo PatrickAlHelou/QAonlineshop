@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Inventory;
+use App\Models\Order;
+use App\Models\OrderDetails;
 use App\Models\Product;
 use App\Models\SubCategory;
 use App\Models\User;
@@ -120,17 +122,51 @@ class AdminController extends Controller
         return redirect(route('admin.usersList'));
     }
 
+    public function searchUsers(Request $request)
+    {
+        $query = $request->input('query');
+
+        $users = User::where('username', 'like', "%$query%")
+            ->orWhere('first_name', 'like', "%$query%")
+            ->orWhere('last_name', 'like', "%$query%")
+            ->orWhere('phone_number', 'like', "%$query%")
+            ->orWhere('email', 'like', "%$query%")
+            ->whereNotIn('isAdmin', ['1'])
+            ->get();
+
+        return view('admin.search_results', compact('users', 'query'));
+    }
+
     public function ordersList()
     {
-        return view('admin.manageOrders');
+        $orders = Order::where('status','!=','Delivered')->get();
+        $users = User::where('id','!=',1)->get();
+        return view('admin.manageOrders',compact('orders','users'));
     }
+
+    public function orderDetail($id)
+    {
+        $order = Order::find($id);
+        $order_detail = OrderDetails::where('order_id','=',$order->id)->get();
+        $products = Product::all();
+        $user = User::where('id','=',$order->user_id)->first();
+        return view('admin.orderDetail',compact('order','user','order_detail','products'));
+    }
+
+    public function changeStatus()
+    {
+
+    }
+
     public function list()
     {
         return view('admin.manageOrders');
     }
     public function orderHistory()
     {
-        return view('admin.orderHistory');
+        $orders = Order::where('status','=','Delivered')->get();
+        $users = User::where('id','!=',1)->get();
+        return view('admin.orderHistory',compact('orders','users'));
     }
     public function inventory()
     {
@@ -163,29 +199,4 @@ class AdminController extends Controller
             ->with('subCategories',$subCategories);
     }
 
-
-    public function searchUsers(Request $request)
-    {
-        $query = $request->input('query');
-
-        $users = User::where('username', 'like', "%$query%")
-            ->orWhere('first_name', 'like', "%$query%")
-            ->orWhere('last_name', 'like', "%$query%")
-            ->orWhere('phone_number', 'like', "%$query%")
-            ->orWhere('email', 'like', "%$query%")
-            ->get();
-
-        return view('admin.search_results', compact('users', 'query'));
-    }
-
-    public function searchInventory(Request $request)
-    {
-        $searchTerm = $request->input('search');
-
-        $inventory = Inventory::whereHas('product', function ($query) use ($searchTerm) {
-            $query->where('name', 'like', "%$searchTerm%");
-        })->get();
-
-        return view('admin.search_results_Inventory', compact('inventory'));
-    }
 }

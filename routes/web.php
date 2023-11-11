@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,8 +29,6 @@ Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->na
 //    Route::get('manage/categories', [App\Http\Controllers\AdminController::class, 'categories'])->name('admin.categories');
 //    Route::get('manage/subCategories', [App\Http\Controllers\AdminController::class, 'subCategories'])->name('admin.subCategories');
 //});
-Route::get('manage/orders', [App\Http\Controllers\AdminController::class, 'ordersList'])->name('admin.ordersList');
-Route::get('manage/orderHistory', [App\Http\Controllers\AdminController::class, 'orderHistory'])->name('admin.orderHistory');
 
 Route::get('manage/categories', [App\Http\Controllers\AdminController::class, 'categories'])->name('admin.categories');
 Route::get('manage/create/categories', [App\Http\Controllers\CategoryController::class, 'create'])->name('admin.categories.create');
@@ -59,7 +58,22 @@ Route::post('manage/store/user', [App\Http\Controllers\AdminController::class, '
 Route::get('manage/edit/user{id}', [App\Http\Controllers\AdminController::class, 'edit'])->name('admin.user.edit');
 Route::post('manage/update/user{id}', [App\Http\Controllers\AdminController::class, 'update'])->name('admin.user.update');
 Route::get('manage/delete/user{id}', [App\Http\Controllers\AdminController::class, 'destroy'])->name('admin.user.delete');
+Route::get('admin/user/search', [App\Http\Controllers\AdminController::class ,'searchUsers'])->name('admin.user.search');
 
+Route::get('manage/orders', [App\Http\Controllers\AdminController::class, 'ordersList'])->name('admin.ordersList');
+Route::get('manage/orders/detail{id}', [App\Http\Controllers\AdminController::class, 'orderDetail'])->name('admin.orders.detail');
+Route::get('manage/orderHistory', [App\Http\Controllers\AdminController::class, 'orderHistory'])->name('admin.orderHistory');
+Route::get('/manage/orders/changeStatus', function () {
+    $id = $_GET['id'];
+    $status = $_GET['status'];
+    $res = DB::table('orders')
+        ->where('id', $id)
+        ->update(['status' => $status]);
+
+    return response()->json([
+        'updated' => $res,
+    ]);
+});
 
 Auth::routes();
 
