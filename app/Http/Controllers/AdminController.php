@@ -11,6 +11,8 @@ use App\Models\SubCategory;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\NotificationController;
+use App\Models\Notification;
 
 class AdminController extends Controller
 {
@@ -62,6 +64,13 @@ class AdminController extends Controller
         $user->password = Hash::make($request->password);
         $user->isAdmin = $request->has('isAdmin') ? 1 : 0;
         $user->save();
+
+        $notification = new Notification();
+        $notification->username = $user->username;
+        $notification->first_name = $user->first_name;
+        $notification->last_name = $user->last_name;
+        $notification->email = $user->email;
+        $notification->save();
 
         return redirect(route('admin.usersList'));
     }

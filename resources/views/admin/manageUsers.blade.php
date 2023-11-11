@@ -55,8 +55,11 @@
                                                 <td>
                                                     <button type="button" class="btn btn-secondary"><a href="{{route('admin.user.edit',['id'=>$user->id])}}" style="color: white;text-decoration: none">View</a></button>
                                                     <button type="button" class="btn btn-info"><a href="{{route('admin.user.edit',['id'=>$user->id])}}" style="color: white;text-decoration: none">Edit</a></button>
-                                                    <button type="button" class="btn btn-danger"><a href="{{route('admin.user.delete',['id'=>$user->id])}}" style="color: white;text-decoration: none">Delete</a></button>
-                                                </td>
+                                                    <form id="delete-form-{{ $user->id }}" action="{{ route('admin.user.delete', ['id' => $user->id]) }}" method="POST" style="display: inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger" style="color: white;">Delete</button>
+                                                    </form>                                                </td>
                                             </tr>
                                         @endforeach
                                     @endif
