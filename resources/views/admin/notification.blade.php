@@ -39,7 +39,7 @@
                                                     <form id="delete-form-{{ $notification->id }}" action="{{ route('admin.notification.delete', ['id' => $notification->id]) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                                        <button type="submit" class="btn btn-primary" style="background-color: #4CAF50; border-color: #4CAF50;">Mark as Viewed</button>
                                                     </form>
                                                 </td>
                                             </tr>
