@@ -13,7 +13,7 @@
 
                             </div>
 
-                            <h4 class="card-title">Notifications</h4>
+                            <h4 class="card-title">User Created</h4>
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>
@@ -22,18 +22,33 @@
                                         <th>Firstname</th>
                                         <th>Lastname</th>
                                         <th>Email</th>
+                                        <th>Created At</th>
+                                        <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach ($notifications as $notification)
+                                    @if(count($notifications) > 0)
+                                        @foreach ($notifications as $notification)
+                                            <tr>
+                                                <td>{{ $notification->username }}</td>
+                                                <td>{{ $notification->first_name }}</td>
+                                                <td>{{ $notification->last_name }}</td>
+                                                <td>{{ $notification->email }}</td>
+                                                <td>{{ $notification->created_at }}</td>
+                                                <td>
+                                                    <form id="delete-form-{{ $notification->id }}" action="{{ route('admin.notification.delete', ['id' => $notification->id]) }}" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
                                         <tr>
-                                            <td>{{ $notification->username }}</td>
-                                            <td>{{ $notification->first_name }}</td>
-                                            <td>{{ $notification->last_name }}</td>
-                                            <td>{{ $notification->email }}</td>
+                                            <td colspan="6">No notifications found.</td>
                                         </tr>
-                                    @endforeach
-
+                                    @endif
                                     </tbody>
                                 </table>
                             </div>

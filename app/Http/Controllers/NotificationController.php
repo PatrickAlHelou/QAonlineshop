@@ -58,8 +58,16 @@ class NotificationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Notification $notification)
+    public function destroy(string $id)
     {
-        //
+        $notification = Notification::find($id);
+        if ($notification) {
+            $notification->delete();
+            // Fetch remaining notifications
+            $notifications = Notification::all();
+            return view('admin.notification', ['notifications' => $notifications]);
+        } else {
+            return view('admin.notification');
+        }
     }
 }
