@@ -7,18 +7,8 @@
                 <div class="col-lg-12 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Orders</h4>
+                            <h4 class="card-title">Search Results</h4>
                             <div class="table-responsive">
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <form action="{{ route('admin.orders.search') }}" method="GET" class="input-group">
-                                            <input type="text" class="form-control form-control-sm" placeholder="Search users" name="query" style="background-color: #f2f2f2; color: #333;">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-primary btn-sm" type="submit">Search</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -28,30 +18,19 @@
                                         <th>Order Date</th>
                                         <th>Location Details</th>
                                         <th>Total Price</th>
-                                        <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @if($orders == '[]')
+                                    @if($orders->isEmpty())
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td>No data</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td colspan="7">No results found.</td>
                                         </tr>
                                     @else
                                         @foreach($orders as $order)
                                             <tr>
                                                 <td>{{$order->id}}</td>
-                                                @foreach($users as $user)
-                                                    @if($user->id == $order->user_id)
-                                                        <td>{{$user->first_name}}</td>
-                                                        <td>{{$user->last_name}}</td>
-                                                    @endif
-                                                @endforeach
+                                                <td>{{$order->user->first_name}}</td>
+                                                <td>{{$order->user->last_name}}</td>
                                                 <td>{{$order->order_date}}</td>
                                                 <td>
                                                     <h10 style="text-decoration: underline">Delivery Area:</h10> {{$order->delivery_area}} <br><br>
@@ -59,9 +38,6 @@
                                                     <h10 style="text-decoration: underline">Delivery Instructions:</h10> {{$order->delivery_instructions}} <br><br>
                                                 </td>
                                                 <td>${{$order->total_price}}</td>
-                                                <td class="d-flex align-items-center justify-content-center">
-                                                    <button type="button" class="btn btn-primary" style="margin-right: 10px"><a href="{{route('admin.orders.detail',['id'=>$order->id])}}" style="color: white;text-decoration: none">View</a></button>
-                                                </td>
                                             </tr>
                                         @endforeach
                                     @endif

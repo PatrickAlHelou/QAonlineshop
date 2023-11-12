@@ -89,3 +89,6 @@ Route::get('admin/product/search', [App\Http\Controllers\AdminController::class 
 //Notification
 Route::get('/notification', [App\Http\Controllers\NotificationController::class, 'index'])->name('notification');
 Route::delete('/notification/{id}', [App\Http\Controllers\NotificationController::class, 'destroy'])->name('admin.notification.delete');
+
+//Filter Orders
+Route::get('/admin/orders/search', [App\Http\Controllers\AdminController::class , 'searchOrder'])->name('admin.orders.search');

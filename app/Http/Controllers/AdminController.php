@@ -208,4 +208,17 @@ class AdminController extends Controller
             ->with('subCategories',$subCategories);
     }
 
+    public function searchOrder(Request $request)
+    {
+        $searchTerm = $request->input('search');
+        $orders = Order::whereHas('user', function ($query) use ($searchTerm) {
+            $query->where('first_name', 'like', "%$searchTerm%")
+                ->orWhere('last_name', 'like', "%$searchTerm%");
+        })->get();
+        $userIds = $orders->pluck('user_id')->unique()->toArray();
+        $users = User::whereIn('id', $userIds)->get();
+
+        return view('admin.search_result_order', compact('orders', 'users'));
+    }
+
 }
