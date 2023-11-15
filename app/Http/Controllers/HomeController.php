@@ -25,12 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $user = User::find(Auth::id());
-        if($user->isAdmin)
-        {
-            return view('admin.dashboardPage');
-//            return view('admin.test');
-        }
-        return view('home');
+
+        return view('admin.dashboardPage');
+
     }
 }

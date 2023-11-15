@@ -15,8 +15,10 @@
                                 <table class="table">
                                     <thead>
                                     <tr>
+                                        <th>Image</th>
                                         <th>Name</th>
                                         <th>Parent</th>
+                                        <th>No. of Products</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -24,18 +26,32 @@
                                     @if($subCategories == '[]')
                                         <tr>
                                             <td></td>
+                                            <td></td>
                                             <td>No data</td>
+                                            <td></td>
                                             <td></td>
                                         </tr>
                                     @else
                                         @foreach($subCategories as $subCategory)
                                             <tr>
+                                                <td><img src="{{asset($subCategory->image)}}"></td>
                                                 <td>{{$subCategory->name}}</td>
                                                 @foreach($categories as $category)
                                                     @if($category->id == $subCategory->category_id)
                                                         <td>{{$category->name}}</td>
                                                     @endif
                                                 @endforeach
+                                                @php
+                                                    $count = 0
+                                                @endphp
+                                                @foreach($products as $product)
+                                                    @if($subCategory->id == $product->sub_category_id)
+                                                        @php
+                                                            $count++
+                                                        @endphp
+                                                    @endif
+                                                @endforeach
+                                                <td>{{$count}}</td>
                                                 <td>
                                                     <button type="button" class="btn btn-info"><a href="{{route('admin.subCategories.edit',['id'=>$subCategory->id])}}" style="color: white;text-decoration: none">Edit</a></button>
                                                     <button type="button" class="btn btn-danger"><a href="{{route('admin.subCategories.delete',['id'=>$subCategory->id])}}" style="color: white;text-decoration: none">Delete</a></button>

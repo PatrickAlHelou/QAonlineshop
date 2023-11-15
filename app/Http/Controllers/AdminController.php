@@ -11,6 +11,7 @@ use App\Models\SubCategory;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\NotificationController;
 use App\Models\Notification;
 
@@ -201,11 +202,13 @@ class AdminController extends Controller
     }
     public function subCategories()
     {
-        $categories = Category::all();
-        $subCategories = SubCategory::all();
-        return view('admin.subCategories')
-            ->with('categories',$categories)
-            ->with('subCategories',$subCategories);
+                $categories = Category::all();
+                $subCategories = SubCategory::all();
+                $products = Product::all();
+                return view('admin.subCategories')
+                    ->with('categories', $categories)
+                    ->with('products',$products)
+                    ->with('subCategories', $subCategories);
     }
 
     public function searchOrder(Request $request)

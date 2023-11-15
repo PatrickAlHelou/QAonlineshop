@@ -8,20 +8,6 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Categories</h4>
-
-
-                            <form method="GET" action="{{ route('admin.product.searchInventory') }}">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" name="search" placeholder="Search by name, category, or subcategory">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary btn-sm" type="submit">Search</button>
-                                    </div>
-                                </div>
-
-                            </form>
-
-                            <div style="margin-top: 20px;"></div>
-
                             <form method="GET" action="{{route('admin.product.create')}}">
                                 <button style="float: right" type="submit" class="btn btn-success">+ Add Product</button>
                             </form>
@@ -29,6 +15,7 @@
                                 <table class="table">
                                     <thead>
                                     <tr>
+                                        <th>Image</th>
                                         <th>Product Name</th>
                                         <th>Category</th>
                                         <th>Sub Category</th>
@@ -42,6 +29,7 @@
                                         <tr>
                                             <td></td>
                                             <td></td>
+                                            <td></td>
                                             <td>No data</td>
                                             <td></td>
                                             <td></td>
@@ -51,6 +39,7 @@
                                             <tr>
                                                 @foreach($products as $product)
                                                     @if($product->id == $item->product_id)
+                                                        <td><img src="{{asset($product->image)}}"></td>
                                                         <td>{{$product->name}}</td>
                                                         @foreach($categories as $category)
                                                             @if($category->id == $product->category_id)
@@ -67,7 +56,7 @@
                                                 @endforeach
                                                 <td>{{$item->quantity}}</td>
                                                 <td>
-                                                    <button type="button" class="btn btn-secondary"><a href="{{route('admin.product.edit',['id'=>$item->id])}}" style="color: white;text-decoration: none">View</a></button>
+                                                    <button type="button" class="btn btn-secondary"><a href="{{route('admin.product.view',['id'=>$item->id])}}" style="color: white;text-decoration: none">View</a></button>
                                                     <button type="button" class="btn btn-info"><a href="{{route('admin.product.edit',['id'=>$item->id])}}" style="color: white;text-decoration: none">Edit</a></button>
                                                     <button type="button" class="btn btn-danger"><a href="{{route('admin.product.delete',['id'=>$item->id])}}" style="color: white;text-decoration: none">Delete</a></button>
                                                 </td>

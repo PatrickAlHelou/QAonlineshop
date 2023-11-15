@@ -54,6 +54,7 @@ Route::get('manage/delete/product{id}', [App\Http\Controllers\ProductController:
 
 Route::get('manage/users', [App\Http\Controllers\AdminController::class, 'usersList'])->name('admin.usersList');
 Route::get('manage/create/user', [App\Http\Controllers\AdminController::class, 'create'])->name('admin.user.create');
+Route::get('manage/view/product{id}', [App\Http\Controllers\ProductController::class, 'show'])->name('admin.product.view');
 Route::post('manage/store/user', [App\Http\Controllers\AdminController::class, 'store'])->name('admin.user.store');
 Route::get('manage/edit/user{id}', [App\Http\Controllers\AdminController::class, 'edit'])->name('admin.user.edit');
 Route::post('manage/update/user{id}', [App\Http\Controllers\AdminController::class, 'update'])->name('admin.user.update');

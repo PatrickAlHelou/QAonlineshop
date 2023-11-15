@@ -79,7 +79,13 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = Product::find($id);
+        $category = Category::where('id','=',$product->category_id)->first();
+        $subCategory = SubCategory::where('id','=',$product->sub_category_id)->first();
+        return view('admin.productView')
+            ->with('product',$product)
+            ->with('category',$category)
+            ->with('subCategory',$subCategory);
     }
 
     /**
@@ -103,26 +109,48 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'name'=>'required',
-            'price'=>'required',
-            'image'=>'required|mimes:png,jpg,jpeg',
-            'category_id'=>'required',
-            'sub_category_id'=>'required',
-            'quantity'=>'required'
-        ]);
+        if($request->image)
+        {
+            $request->validate([
+                'name'=>'required',
+                'price'=>'required',
+                'image'=>'required|mimes:png,jpg,jpeg',
+                'category_id'=>'required',
+                'sub_category_id'=>'required',
+                'quantity'=>'required'
+            ]);
+        }
+        else
+        {
+            $request->validate([
+                'name'=>'required',
+                'price'=>'required',
+                'category_id'=>'required',
+                'sub_category_id'=>'required',
+                'quantity'=>'required'
+            ]);
+        }
+
         $product = Product::find($id);
 
-        $filename = time().'.'.$request->file('image')->extension();
-        $request->file('image')->storeAs('public/images/products',$filename);
+        $filename = "";
+        if($request->image)
+        {
+            $filename = time().'.'.$request->file('image')->extension();
+            $request->file('image')->storeAs('public/images/products',$filename);
 
-        if(File::exists($product->image)) {
-            File::delete($product->image);
+            if(File::exists($product->image)) {
+                File::delete($product->image);
+            }
+
         }
 
         $product->name = $request->name;
         $product->price = $request->price;
-        $product->image = 'storage/images/products/'.$filename;
+        if($request->image)
+        {
+            $product->image = 'storage/images/products/'.$filename;
+        }
         $product->description = $request->description;
         $product->category_id = $request->category_id;
         $product->sub_category_id = $request->sub_category_id;
