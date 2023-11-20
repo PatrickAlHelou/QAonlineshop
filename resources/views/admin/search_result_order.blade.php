@@ -14,6 +14,7 @@
                                     <tr>
                                         <th>Order ID</th>
                                         <th>Status</th>
+                                        <th>Status</th>
                                         <th>Client Firstname</th>
                                         <th>Client Lastname</th>
                                         <th>Order Date</th>
@@ -30,6 +31,7 @@
                                         @foreach($orders as $order)
                                             <tr>
                                                 <td>{{$order->id}}</td>
+                                                <td>{{$order->status}}</td>
                                                 <td>{{$order->status}}</td>
                                                 <td>{{$order->user->first_name}}</td>
                                                 <td>{{$order->user->last_name}}</td>

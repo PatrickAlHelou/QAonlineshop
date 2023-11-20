@@ -8,6 +8,13 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Categories</h4>
+                            <form action="{{ route('admin.inventory.search') }}" method="GET" class="input-group">
+                                <input type="text" class="form-control form-control-sm" placeholder="Search users" name="query" style="background-color: #f2f2f2; color: #333;">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary btn-sm" type="submit">Search</button>
+                                </div>
+                            </form>
+                            <br>
                             <form method="GET" action="{{route('admin.product.create')}}">
                                 <button style="float: right" type="submit" class="btn btn-success">+ Add Product</button>
                             </form>

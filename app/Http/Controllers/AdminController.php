@@ -224,4 +224,31 @@ class AdminController extends Controller
         return view('admin.search_result_order', compact('orders', 'users'));
     }
 
+    public function searchInventory(Request $request)
+    {
+        $searchQuery = $request->input('query');
+
+        $inventory = Inventory::query()
+            ->join('products', 'products.id', '=', 'inventories.product_id')
+            ->join('categories', 'categories.id', '=', 'products.category_id')
+            ->join('sub_categories', 'sub_categories.id', '=', 'products.sub_category_id')
+            ->where(function ($query) use ($searchQuery) {
+                $query->where('products.name', 'LIKE', '%' . $searchQuery . '%')
+                    ->orWhere('categories.name', 'LIKE', '%' . $searchQuery . '%')
+                    ->orWhere('sub_categories.name', 'LIKE', '%' . $searchQuery . '%');
+            })
+            ->get();
+
+        $products = Product::all();
+        $categories = Category::all();
+        $subCategories = SubCategory::all();
+
+        return view('admin.manageInventory')
+            ->with('inventory', $inventory)
+            ->with('products', $products)
+            ->with('categories', $categories)
+            ->with('subCategories', $subCategories);
+
+    }
+
 }
