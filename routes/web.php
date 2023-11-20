@@ -96,3 +96,9 @@ Route::get('/admin/orders/search', [App\Http\Controllers\AdminController::class 
 
 //Filer inventory
 Route::get('/admin/inventory/search', [App\Http\Controllers\AdminController::class , 'searchInventory'])->name('admin.inventory.search');
+
+//Filter category
+Route::get('/admin/category/search', [App\Http\Controllers\AdminController::class , 'searchCategory'])->name('admin.category.search');
+
+//Filter Subcategory
+Route::get('/admin/subcategory/search', [App\Http\Controllers\AdminController::class , 'searchSubCategory'])->name('admin.subcategory.search');

@@ -8,6 +8,16 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Sub Categories</h4>
+
+                            <form method="GET" action="{{ route('admin.subcategory.search') }}">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Search by name" name="query">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="submit">Search</button>
+                                    </div>
+                                </div>
+                            </form>
+
                             <form method="GET" action="{{route('admin.subCategories.create')}}">
                                 <button style="float: right" type="submit" class="btn btn-success">+ Add Sub Category</button>
                             </form>

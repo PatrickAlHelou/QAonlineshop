@@ -251,4 +251,36 @@ class AdminController extends Controller
 
     }
 
+    public function searchCategory(Request $request)
+    {
+        $searchQuery = $request->input('query');
+
+        $categories = Category::query()
+            ->where('name', 'LIKE', '%' . $searchQuery . '%')
+            ->get();
+
+        $subCategories = SubCategory::all();
+
+        return view('admin.categories')
+            ->with('categories', $categories)
+            ->with('subCategories', $subCategories);
+    }
+
+    public function searchSubCategory(Request $request)
+    {
+        $searchQuery = $request->input('query');
+
+        $subCategories = SubCategory::query()
+            ->where('name', 'LIKE', '%' . $searchQuery . '%')
+            ->get();
+
+        $categories = Category::all();
+        $products = Product::all();
+
+        return view('admin.subCategories')
+            ->with('subCategories', $subCategories)
+            ->with('categories', $categories)
+            ->with('products', $products);
+    }
+
 }
